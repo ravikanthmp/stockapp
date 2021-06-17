@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const users = require('./public/data/sample-users')
-const watchlists = require('./public/data/sample-watchlists')
+const users = require('../public/data/sample-users')
+const watchlists = require('../public/data/sample-watchlists')
 
 // all users
 router.get('/all', ((req, res) => {
