@@ -4,6 +4,7 @@ const https = require('https')
 const fs = require('fs')
 const morgan = require('morgan')
 const alpacaRoutes = require('./alpaca')
+const userRoutes = require('./users')
 
 // Middleware
 app.use(express.static('public'))
@@ -11,6 +12,9 @@ app.use(morgan('tiny'))
 
 // Routes
 app.use('/alpaca', alpacaRoutes);
+
+app.use('/users', userRoutes);
+
 
 app.use('*', ((req, res) => {
    res.status(404).send("No Content Found!")
