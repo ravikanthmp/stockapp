@@ -1,2 +1,6 @@
 node_modules
 .idea
+.env
+localhost-key.pem
+localhost.pem
+package-lock.json
