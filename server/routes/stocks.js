@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('./../utils/dbClient');
+const pool = require('../utils/dbClient');
 const {alpaca} = require('./alpaca');
 
 // all users
