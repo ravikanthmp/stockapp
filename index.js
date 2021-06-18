@@ -3,10 +3,9 @@ const app =  express();
 const https = require('https')
 const fs = require('fs')
 const morgan = require('morgan')
-const alpacaRoutes = require('./routes/alpaca')
+const {router : alpacaRoutes} = require('./routes/alpaca')
 const userRoutes = require('./routes/users')
-const dogRoutes = require('./routes/dogs')
-
+const stockRoute = require('./routes/stocks')
 // Middleware
 app.use(express.static('public'))
 app.use(morgan('tiny'))
@@ -15,8 +14,7 @@ app.use(morgan('tiny'))
 app.use('/alpaca', alpacaRoutes);
 
 app.use('/users', userRoutes);
-
-app.use('/dogs', dogRoutes)
+app.use('/stocks', stockRoute)
 
 app.use('*', ((req, res) => {
    res.status(404).send("No Content Found!")
