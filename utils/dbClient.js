@@ -5,6 +5,7 @@ const dbSocketAddr = process.env.DB_HOST.split(':');
 
 // Establish a connection to the database
 const pool =  mysql.createPool({
+    connectionLimit : 10,
     user: process.env.DB_USER, // e.g. 'my-db-user'
     password: process.env.DB_PASS, // e.g. 'my-db-password'
     database: process.env.DB_NAME, // e.g. 'my-database'
