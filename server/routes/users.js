@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const users = require('../public/data/sample-users')
 const watchlists = require('../public/data/sample-watchlists')
-const pool = require('./../utils/dbClient');
+const pool = require('../utils/dbClient');
 
 // all users
 router.get('/all', ((req, res) => {
