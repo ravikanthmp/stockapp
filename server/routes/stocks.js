@@ -33,4 +33,8 @@ router.get('/fetch/:tickerName/', ((req, res) => {
 }))
 
 
+const fetchStock = (ticker) => {
+    return n
+}
+
 module.exports = router;
