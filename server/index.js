@@ -7,8 +7,10 @@ const {router : alpacaRoutes} = require('./routes/alpaca')
 const userRoutes = require('./routes/users')
 const stockRoute = require('./routes/stocks')
 const newsRoute = require('./routes/newsfeed')
+var cors = require('cors')
 
 // Middleware
+app.use(cors());
 app.use(express.static('public'))
 app.use(morgan('tiny'))
 
