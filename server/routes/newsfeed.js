@@ -3,7 +3,7 @@ const router = express.Router();
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(process.env.NEWSFEED_API_KEY);
 
-//
+// all finance
 router.get('/allfinance', (async (req, res) => {
 
     try {
