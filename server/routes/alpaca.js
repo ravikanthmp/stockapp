@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const alpaca = new Alpaca({
     keyId: process.env.ALPACA_KEY,
-    secretKey:  process.env.ALPACA_SECRET_KEY,
+    secretKey: process.env.ALPACA_SECRET_KEY,
     paper: true,
     usePolygon: false
 })
@@ -21,5 +21,5 @@ router.get('/account', ((req, res) => {
 
 module.exports = {
     router,
-    alpaca
+    alpaca,
 };
