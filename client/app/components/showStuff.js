@@ -1,29 +1,34 @@
 import React from "react";
 import {DisplayTicker} from "./displayTicker";
-
+import {TickerInput} from "./tickerInput";
+import '../../css/showStuff.css'
 
 export class ShowStuff extends React.Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            tickerName : "SPY"
+            tickerName: "SPY"
         }
         this.updateTickerName = this.updateTickerName.bind(this);
     }
 
-    updateTickerName(e){
-        this.setState({
-            tickerName : e.target.value
-        })
+    updateTickerName(name) {
+        if (name !== this.state.tickerName){
+            this.setState({
+                tickerName: name
+            })
+        }
+
     }
 
     render() {
-        // return (<div>Stuff 🍆</div>);
         return (<div className="showStuff">
-            <input value={this.state.tickerName} on
-                   onChange={this.updateTickerName}/>
-            <DisplayTicker key={this.state.tickerName} tickerName={this.state.tickerName} style={{width : "700px"}}/>
+            <div>
+                {/*<img src='../../assets/logo.png' alt='icon'/>*/}
+                <TickerInput handleSubmission={(tickerName) => this.updateTickerName(tickerName) }/>
+            </div>
+            <DisplayTicker tickerName={this.state.tickerName} style={{width: "700px"}}/>
         </div>)
     }
 }

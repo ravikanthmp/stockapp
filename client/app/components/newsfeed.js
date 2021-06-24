@@ -47,10 +47,7 @@ export default class Newsfeed extends React.Component{
     async fetchAllNews() {
         const res = fetch('http://localhost:8000/news/allfinance')
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                return data;
-            })
+            .then(data => data)
             .catch(err => {
                 throw new Error(err)
             });

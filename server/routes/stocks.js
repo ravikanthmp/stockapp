@@ -41,44 +41,51 @@ router.get('/fetch/:tickerName/', ((req, res) => {
 router.get('/fetchHistorical/:tickerName/', ((req, res) => {
     return getLatestTrade(req.params.tickerName)
         .then(lastTradePrice => {
-            console.log("lastTradePrice is " + JSON.stringify(lastTradePrice))
-            const q1 = `insert ignore into stockapp.stock(ticker, current_price) values(\"${req.params.tickerName}\", ${lastTradePrice.Price});`;
-            pool.query(q1, [req.params.tickerName], (error, result) => {
-                if (error) {
-                    throw new Error(error);
-                }else {
-                    return result;
-                }
-            });
+            const ticker = req.params.tickerName.toUpperCase();
+
+            const q1 = `insert ignore into stockapp.stock(ticker, current_price) values(\"${ticker}\", ${lastTradePrice.Price});`;
+
+            return new Promise((resolve, reject) => {
+                pool.query(q1, [req.params.tickerName], (error, result) => {
+                    if (error) {
+                        reject(error)
+                    }else {
+                        resolve(result)
+                    }
+                });
+            })
+
             }
         )
         .then(result => fetchBars(req.params.tickerName))
         .then(data => {
             try{
-                const ticker = req.params.tickerName
+                const ticker = req.params.tickerName.toUpperCase();
 
                 let newVals = data.map(row => {
                     let iso = moment(row.Timestamp).format('YYYY-MM-DD');
                     let d2 = [ticker, iso, row.OpenPrice, row.HighPrice, row.LowPrice, row.ClosePrice, row.Volume]
-                    console.log({iso})
                     return d2;
                 });
 
-                pool.query( 'INSERT ignore INTO stock_price_historical_daily(ticker, day, open, high, low, close, volume)  values ?', [newVals], (err, result) => {
-                    if (err){
-                        console.log("couldn't save to DB 🙁. Reason " + err)
-                    }else {
-                        console.log(result);
-                        return result;
-                    }
-                });
+                return new Promise((resolve, reject) => {
+                    pool.query( 'INSERT ignore INTO stock_price_historical_daily(ticker, day, open, high, low, close, volume)  values ?', [newVals], (err, result) => {
+                        if (err){
+                            console.log("couldn't save to DB 🙁. Reason " + err)
+                            reject(err)
+                        }else {
+                            resolve(result)
+                        }
+                    });
+                })
+
 
             }catch (e) {
                 console.log("couldn't fetch historical prices from DB 🙁")
             }
         })
         .then(dataFromDB => {
-            console.log(JSON.stringify(dataFromDB))
+            console.log(`from DB` + JSON.stringify(dataFromDB))
             const q1 = `select * from stock_price_historical_daily where ticker = ?;`;
             pool.query(q1, [req.params.tickerName], (err, result) => {
                  if (err){
@@ -105,8 +112,6 @@ const fetchHistorical =  async (ticker, startDate) => {
     if (!startDate){
         startDate = sixtyDaysAgo;
     }
-
-    console.log({startDate})
 
     return await alpaca.getAggregates(ticker,'day', startDate, today)
         .then(data => {
