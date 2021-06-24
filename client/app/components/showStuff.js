@@ -24,10 +24,7 @@ export class ShowStuff extends React.Component {
 
     render() {
         return (<div className="showStuff">
-            <div>
-                {/*<img src='../../assets/logo.png' alt='icon'/>*/}
-                <TickerInput handleSubmission={(tickerName) => this.updateTickerName(tickerName) }/>
-            </div>
+            <TickerInput handleSubmission={(tickerName) => this.updateTickerName(tickerName) }/>
             <DisplayTicker tickerName={this.state.tickerName} style={{width: "700px"}}/>
         </div>)
     }
