@@ -36,7 +36,7 @@ module.exports = {
             }
         ]
     },
-    mode : process.env.NODE_ENV === 'development'? 'development' : 'production',
+    mode : 'development',
     plugins: [
         new HtmlWebpackPlugin({
             template : 'app/index.html'
