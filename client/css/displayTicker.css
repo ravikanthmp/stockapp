@@ -21,3 +21,13 @@
     border: 0;
     background: inherit;
 }
+
+.selected-time-btn{
+    border:0;
+    color: #800000;
+}
+
+.unselected-time-btn{
+    border: 0;
+    background: inherit;
+}
